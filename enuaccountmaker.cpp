@@ -51,10 +51,17 @@ public:
     enumivo_assert(found >= 1, "account name is too short");
     enumivo_assert(found <= 8, "account name is too long");
 
+    // reject
+
     // get account name
     const string account_string = memo.substr(0, found + 4);
     const account_name account_to_create =
         enumivo::string_to_name(account_string.c_str());
+
+    // check name char range
+    // not support . now
+    enumivo_assert(account_string.find_first_not_of("12345abcdefghijklmnopqrstuvwxyz") == std::string::npos, 
+        "char out of range, only 1-5a-z is accpted now");
 
     // minimum transfer
     auto min_amount = asset(10000);
