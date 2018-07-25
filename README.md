@@ -2,7 +2,7 @@
 This is an auto xxx.enu premium account maker smart contract for creating accounts on the Enumivo mainnet.
 
 ## Usage
-Use a onchain wallet, like [ironman](http://enuironman.com/demo_transfer) and [enumivo wallet](https://wallet.enumivo.com/transfer) or BIXIN to transfer some ENUs (e.g. 10 ENU) to the account "enu" with meomos in the format of the belowing:
+Use a onchain wallet, like [ironman](http://enuironman.com/demo_transfer) and [enumivo wallet](https://wallet.enumivo.com/transfer) or BIXIN to transfer some ENUs (e.g. 10 ENU) to the account "enu" with memos in the format of the belowing:
 
 > new account name : ENU public key
 >
@@ -11,7 +11,7 @@ Use a onchain wallet, like [ironman](http://enuironman.com/demo_transfer) and [e
 We now open names in lenght of 11 and 12, like bitcoin.enu (11 char) or ethereum.enu (12 char). The range of char is limited to only 1-5 a-z as a normal ENU/EOS mainnet account.
 
 ## Fee and resource
-The fee is 10 ENU for 11 in length and 2 ENU for 12.
+The fee is 10 ENU for 11 char in length and 2 ENU for 12 (virtually free considering the cost of buyram and resource).
 
 The smart contract will create a new account with the given name and public key for both owner and active permission. 
 
