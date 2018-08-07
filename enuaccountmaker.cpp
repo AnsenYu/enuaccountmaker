@@ -74,7 +74,7 @@ public:
 
     // check name char range
     // not support . now
-    enumivo_assert(account_string.find_first_not_of("12345abcdefghijklmnopqrstuvwxyz") == std::string::npos, 
+    enumivo_assert(account_string.find_first_not_of(".12345abcdefghijklmnopqrstuvwxyz") == std::string::npos, 
         "char out of range, only 1-5a-z is accpted now");
 
     // minimum transfer
@@ -98,7 +98,7 @@ public:
     }
 
     // get key string
-    const string key_str = "";
+    string key_str = "";
     if (normal_name) {
       key_str = memo.substr(found + 1, 53);
     } else {
@@ -138,7 +138,7 @@ public:
 
     // buy ram
     INLINE_ACTION_SENDER(call::enu, buyram)
-    (N(enumivo), {{_self, N(active)}}, {_self, account_to_create, amount});
+    (N(enumivo), {{_self, N(active)}}, {_self, account_to_create, ram_amount});
 
     // delegate and transfer cpu and net
     INLINE_ACTION_SENDER(call::enu, delegatebw)
