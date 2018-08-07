@@ -18,7 +18,9 @@ public:
 
   void transfer(const account_name sender, const account_name receiver) {
     const auto transfer = enumivo::unpack_action_data<enumivo::currency::transfer>();
-    const std::string middle_tag = ".enu:ENU";
+    const std::string enu_middle_tag = ".enu:ENU";
+    const std::string normal_middle_tag = ":ENU";
+    bool normal_name = false;
 
     if (transfer.from == _self || transfer.to != _self) {
       // this is an outgoing transfer, do nothing
@@ -46,15 +48,27 @@ public:
     enumivo_assert(memo.length() <= 66, "Malformed Memo (not right length)");
 
     // must contain ".enu:ENU" suffix
-    std::size_t found = memo.find(middle_tag);
-    enumivo_assert(found != std::string::npos, "new account must use .enu suffix");
-    enumivo_assert(found >= 1, "account name is too short");
-    enumivo_assert(found <= 8, "account name is too long");
+    std::size_t found = memo.find(enu_middle_tag);
+    if (found != std::string::npos) {
+      // enumivo_assert(found != std::string::npos, "new account must use .enu suffix");
+      enumivo_assert(found >= 1, "account name is too short");
+      enumivo_assert(found <= 8, "account name is too long");
+    } else {
+      // normal 12 char names
+      found = memo.find(normal_middle_tag);
+      enumivo_assert(found == 12, "normal account name must be 12 char in length");
+      normal_name = true;
+    }
 
     // reject
 
     // get account name
-    const string account_string = memo.substr(0, found + 4);
+    string account_string = "";
+    if (normal_name) {
+      account_string = memo.substr(0, found);
+    } else {
+      account_string = memo.substr(0, found + 4);
+    }
     const account_name account_to_create =
         enumivo::string_to_name(account_string.c_str());
 
@@ -67,8 +81,13 @@ public:
     auto min_amount = asset(10000);
     switch(account_string.length()) {
         case 12:
-            min_amount = asset(20000);
-            enumivo_assert(transfer.quantity.amount >= min_amount.amount, "12 char name requires to transfer at least 1 ENU.");
+            if (normal_name) {
+              min_amount = asset(10000);
+              enumivo_assert(transfer.quantity.amount >= min_amount.amount, "12 char normal name requires to transfer at least 1 ENU.");
+            } else {
+              min_amount = asset(20000);
+              enumivo_assert(transfer.quantity.amount >= min_amount.amount, "12 char name requires to transfer at least 2 ENU.");
+            }
             break;
         case 11:
             min_amount = asset(100000);
@@ -79,22 +98,32 @@ public:
     }
 
     // get key string
-    const string key_str = memo.substr(found + 5, 53);
+    const string key_str = "";
+    if (normal_name) {
+      key_str = memo.substr(found + 1, 53);
+    } else {
+      key_str = memo.substr(found + 5, 53);
+    }
     const abienu::public_key pubkey = abienu::string_to_public_key(key_str);
-
     std::array<char, 33> pubkey_char;
     copy(pubkey.data.begin(), pubkey.data.end(), pubkey_char.begin());
-
     // turn to auth
     const auto auth = authority{1, {{{(uint8_t)abienu::key_type::k1, pubkey_char}, 1}}, {}, {}};
 
-    const auto amount = buyrambytes(4 * 1024);
-    const auto cpu = asset(1000);
-    const auto net = asset(1000);
+    // buy 4KB ram
+    const auto ram_amount = buyrambytes(4 * 1024);
+    enumivo_assert( ram_amount.amount <= transfer.quantity.amount, "Not enough ENU to buy ram");
 
-    const auto cost = amount + cpu + net;
+    // stake resource
+    auto left4stake = min_amount.amount > ram_amount.amount ? 
+        min_amount.amount - ram_amount.amount : 0 ;
+    const auto cpu = left4stake > 2000 ? asset(1000) : asset(left4stake/2);
+    const auto net = left4stake > 2000 ? asset(1000) : asset(left4stake/2);
+
+    const auto cost = ram_amount + cpu + net;
     enumivo_assert( cost.amount <= transfer.quantity.amount, "Not enough ENU to create account");
 
+    // remaining balance
     auto remaining_balance = asset(0);
     if (cost.amount > min_amount.amount) {
       remaining_balance = transfer.quantity - cost;
@@ -137,7 +166,7 @@ public:
                                      "the \"enumivo\" system account");          \
     }                                                                          \
     auto self = receiver;                                                      \
-    if (code == self || code == N(enu.token) || action == N(onerror)) {      \
+    if (code == N(enu.token) || action == N(onerror)) {      \
       TYPE thiscontract(self);                                                 \
       switch (action) { ENUMIVO_API(TYPE, MEMBERS) }                             \
       /* does not allow destructor of thiscontract to run: enu_exit(0); */   \
