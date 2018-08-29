@@ -104,6 +104,7 @@ public:
     } else {
       key_str = memo.substr(found + 5, 53);
     }
+    enumivo_assert(53 == key_str.length(), "Public key length is not correct, please check again.");
     const abienu::public_key pubkey = abienu::string_to_public_key(key_str);
     std::array<char, 33> pubkey_char;
     copy(pubkey.data.begin(), pubkey.data.end(), pubkey_char.begin());

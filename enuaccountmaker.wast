@@ -23,7 +23,7 @@
  (table 2 2 anyfunc)
  (elem (i32.const 0) $__wasm_nullptr $_ZN7enuname8transferEyy)
  (memory $0 1)
- (data (i32.const 4) "\f0h\00\00")
+ (data (i32.const 4) "0i\00\00")
  (data (i32.const 16) "\00")
  (data (i32.const 288) "magnitude of asset amount must be less than 2^62\00")
  (data (i32.const 352) "invalid symbol name\00")
@@ -59,23 +59,24 @@
  (data (i32.const 1376) "12 char name requires to transfer at least 2 ENU.\00")
  (data (i32.const 1440) "11 char name requires to transfer at least 10 ENU.\00")
  (data (i32.const 1504) "Only 11 and 12 char length name is available now.\00")
- (data (i32.const 1568) "Not enough ENU to buy ram\00")
- (data (i32.const 1600) "attempt to add asset with different symbol\00")
- (data (i32.const 1648) "addition underflow\00")
- (data (i32.const 1680) "addition overflow\00")
- (data (i32.const 1712) "Not enough ENU to create account\00")
- (data (i32.const 1760) "attempt to subtract asset with different symbol\00")
- (data (i32.const 1808) "subtraction underflow\00")
- (data (i32.const 1840) "subtraction overflow\00")
- (data (i32.const 1872) "active\00")
- (data (i32.const 1888) "Initial balance\00")
- (data (i32.const 1904) "Must be ENU\00")
- (data (i32.const 1920) "write\00")
- (data (i32.const 1936) "get\00")
- (data (i32.const 10336) "malloc_from_freed was designed to only be called after _heap was completely allocated\00")
- (data (i32.const 10432) "\00\00\00\00\00\00\f0?\00\00\00\00\00\00\f8?")
- (data (i32.const 10448) "\00\00\00\00\00\00\00\00\06\d0\cfC\eb\fdL>")
- (data (i32.const 10464) "\00\00\00\00\00\00\00\00\00\00\00@\03\b8\e2?")
+ (data (i32.const 1568) "Public key length is not correct, please check again.\00")
+ (data (i32.const 1632) "Not enough ENU to buy ram\00")
+ (data (i32.const 1664) "attempt to add asset with different symbol\00")
+ (data (i32.const 1712) "addition underflow\00")
+ (data (i32.const 1744) "addition overflow\00")
+ (data (i32.const 1776) "Not enough ENU to create account\00")
+ (data (i32.const 1824) "attempt to subtract asset with different symbol\00")
+ (data (i32.const 1872) "subtraction underflow\00")
+ (data (i32.const 1904) "subtraction overflow\00")
+ (data (i32.const 1936) "active\00")
+ (data (i32.const 1952) "Initial balance\00")
+ (data (i32.const 1968) "Must be ENU\00")
+ (data (i32.const 1984) "write\00")
+ (data (i32.const 2000) "get\00")
+ (data (i32.const 10400) "malloc_from_freed was designed to only be called after _heap was completely allocated\00")
+ (data (i32.const 10496) "\00\00\00\00\00\00\f0?\00\00\00\00\00\00\f8?")
+ (data (i32.const 10512) "\00\00\00\00\00\00\00\00\06\d0\cfC\eb\fdL>")
+ (data (i32.const 10528) "\00\00\00\00\00\00\00\00\00\00\00@\03\b8\e2?")
  (export "memory" (memory $0))
  (export "_ZeqRK11checksum256S1_" (func $_ZeqRK11checksum256S1_))
  (export "_ZeqRK11checksum160S1_" (func $_ZeqRK11checksum160S1_))
@@ -4628,7 +4629,7 @@
             )
             (i64.const 1431192836)
            )
-           (i32.const 1904)
+           (i32.const 1968)
           )
           (set_local $15
            (i32.const 0)
@@ -6708,6 +6709,29 @@
             )
            )
           )
+          (call $enumivo_assert
+           (i32.eq
+            (select
+             (i32.load offset=412
+              (get_local $25)
+             )
+             (i32.shr_u
+              (tee_local $16
+               (i32.load8_u offset=408
+                (get_local $25)
+               )
+              )
+              (i32.const 1)
+             )
+             (i32.and
+              (get_local $16)
+              (i32.const 1)
+             )
+            )
+            (i32.const 53)
+           )
+           (i32.const 1568)
+          )
           (i32.store offset=364
            (get_local $25)
            (select
@@ -7212,7 +7236,7 @@
              )
             )
            )
-           (i32.const 1568)
+           (i32.const 1632)
           )
           (block $label$90
            (block $label$91
@@ -7673,7 +7697,7 @@
              )
             )
            )
-           (i32.const 1600)
+           (i32.const 1664)
           )
           (call $enumivo_assert
            (i64.gt_s
@@ -7685,14 +7709,14 @@
             )
             (i64.const -4611686018427387904)
            )
-           (i32.const 1648)
+           (i32.const 1712)
           )
           (call $enumivo_assert
            (i64.lt_s
             (get_local $17)
             (i64.const 4611686018427387904)
            )
-           (i32.const 1680)
+           (i32.const 1744)
           )
           (call $enumivo_assert
            (i64.eq
@@ -7704,7 +7728,7 @@
              )
             )
            )
-           (i32.const 1600)
+           (i32.const 1664)
           )
           (call $enumivo_assert
            (i64.gt_s
@@ -7716,14 +7740,14 @@
             )
             (i64.const -4611686018427387904)
            )
-           (i32.const 1648)
+           (i32.const 1712)
           )
           (call $enumivo_assert
            (i64.lt_s
             (get_local $20)
             (i64.const 4611686018427387904)
            )
-           (i32.const 1680)
+           (i32.const 1744)
           )
           (call $enumivo_assert
            (i64.le_s
@@ -7735,7 +7759,7 @@
              )
             )
            )
-           (i32.const 1712)
+           (i32.const 1776)
           )
           (call $enumivo_assert
            (i32.const 1)
@@ -7861,7 +7885,7 @@
               (get_local $21)
               (get_local $12)
              )
-             (i32.const 1760)
+             (i32.const 1824)
             )
             (call $enumivo_assert
              (i64.gt_s
@@ -7873,14 +7897,14 @@
               )
               (i64.const -4611686018427387904)
              )
-             (i32.const 1808)
+             (i32.const 1872)
             )
             (call $enumivo_assert
              (i64.lt_s
               (get_local $19)
               (i64.const 4611686018427387904)
              )
-             (i32.const 1840)
+             (i32.const 1904)
             )
             (br $label$118)
            )
@@ -7889,7 +7913,7 @@
              (get_local $19)
              (get_local $12)
             )
-            (i32.const 1760)
+            (i32.const 1824)
            )
            (call $enumivo_assert
             (i64.gt_s
@@ -7901,14 +7925,14 @@
              )
              (i64.const -4611686018427387904)
             )
-            (i32.const 1808)
+            (i32.const 1872)
            )
            (call $enumivo_assert
             (i64.lt_s
              (get_local $19)
              (i64.const 4611686018427387904)
             )
-            (i32.const 1840)
+            (i32.const 1904)
            )
           )
           (set_local $17
@@ -8057,7 +8081,7 @@
            (i64.const 59)
           )
           (set_local $16
-           (i32.const 1872)
+           (i32.const 1936)
           )
           (set_local $23
            (i64.const 0)
@@ -8616,7 +8640,7 @@
            (i64.const 59)
           )
           (set_local $16
-           (i32.const 1872)
+           (i32.const 1936)
           )
           (set_local $23
            (i64.const 0)
@@ -9084,7 +9108,7 @@
            (i64.const 59)
           )
           (set_local $16
-           (i32.const 1872)
+           (i32.const 1936)
           )
           (set_local $23
            (i64.const 0)
@@ -9553,7 +9577,7 @@
             (i64.const 59)
            )
            (set_local $16
-            (i32.const 1872)
+            (i32.const 1936)
            )
            (set_local $23
             (i64.const 0)
@@ -9766,7 +9790,7 @@
             (i32.ge_u
              (tee_local $16
               (call $strlen
-               (i32.const 1888)
+               (i32.const 1952)
               )
              )
              (i32.const -16)
@@ -9834,7 +9858,7 @@
             (drop
              (call $memcpy
               (get_local $7)
-              (i32.const 1888)
+              (i32.const 1952)
               (get_local $16)
              )
             )
@@ -10657,6 +10681,17 @@
    (call $_ZN7enumivorsINS_10datastreamIPKcEEEERT_S6_RNS_8currency8transferE
     (get_local $6)
     (get_local $0)
+   )
+  )
+  (block $label$7
+   (br_if $label$7
+    (i32.lt_u
+     (get_local $1)
+     (i32.const 513)
+    )
+   )
+   (call $free
+    (get_local $2)
    )
   )
   (i32.store offset=4
@@ -13365,7 +13400,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -13406,7 +13441,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -13445,7 +13480,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -13480,7 +13515,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -13716,7 +13751,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -13738,7 +13773,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -13857,7 +13892,7 @@
      )
      (i32.const 0)
     )
-    (i32.const 1920)
+    (i32.const 1984)
    )
    (drop
     (call $memcpy
@@ -13931,7 +13966,7 @@
       )
       (i32.const 7)
      )
-     (i32.const 1920)
+     (i32.const 1984)
     )
     (drop
      (call $memcpy
@@ -13963,7 +13998,7 @@
       )
       (i32.const 7)
      )
-     (i32.const 1920)
+     (i32.const 1984)
     )
     (drop
      (call $memcpy
@@ -14097,7 +14132,7 @@
      )
      (i32.const 0)
     )
-    (i32.const 1920)
+    (i32.const 1984)
    )
    (drop
     (call $memcpy
@@ -14153,7 +14188,7 @@
      )
     )
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -14283,7 +14318,7 @@
      )
      (i32.const 0)
     )
-    (i32.const 1920)
+    (i32.const 1984)
    )
    (drop
     (call $memcpy
@@ -14359,7 +14394,7 @@
      )
      (get_local $5)
     )
-    (i32.const 1920)
+    (i32.const 1984)
    )
    (drop
     (call $memcpy
@@ -14437,7 +14472,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -14478,7 +14513,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -14517,7 +14552,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -14552,7 +14587,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -14591,7 +14626,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -14626,7 +14661,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -14672,7 +14707,7 @@
     )
     (i32.const 0)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -14727,7 +14762,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -14768,7 +14803,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -14807,7 +14842,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -14842,7 +14877,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -15765,7 +15800,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -15806,7 +15841,7 @@
     )
     (i32.const 7)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -15845,7 +15880,7 @@
     )
     (i32.const 3)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -15905,7 +15940,7 @@
     )
     (i32.const 3)
    )
-   (i32.const 1920)
+   (i32.const 1984)
   )
   (drop
    (call $memcpy
@@ -16040,7 +16075,7 @@
      )
      (i32.const 0)
     )
-    (i32.const 1920)
+    (i32.const 1984)
    )
    (drop
     (call $memcpy
@@ -16105,7 +16140,7 @@
       )
       (i32.const 1)
      )
-     (i32.const 1920)
+     (i32.const 1984)
     )
     (drop
      (call $memcpy
@@ -16240,7 +16275,7 @@
      )
      (i32.const 0)
     )
-    (i32.const 1920)
+    (i32.const 1984)
    )
    (drop
     (call $memcpy
@@ -16309,7 +16344,7 @@
       )
       (i32.const 7)
      )
-     (i32.const 1920)
+     (i32.const 1984)
     )
     (drop
      (call $memcpy
@@ -16341,7 +16376,7 @@
       )
       (i32.const 7)
      )
-     (i32.const 1920)
+     (i32.const 1984)
     )
     (drop
      (call $memcpy
@@ -16376,7 +16411,7 @@
       )
       (i32.const 1)
      )
-     (i32.const 1920)
+     (i32.const 1984)
     )
     (drop
      (call $memcpy
@@ -16513,7 +16548,7 @@
      )
      (i32.const 0)
     )
-    (i32.const 1920)
+    (i32.const 1984)
    )
    (drop
     (call $memcpy
@@ -16576,7 +16611,7 @@
       )
       (i32.const 3)
      )
-     (i32.const 1920)
+     (i32.const 1984)
     )
     (drop
      (call $memcpy
@@ -16613,7 +16648,7 @@
       )
       (i32.const 1)
      )
-     (i32.const 1920)
+     (i32.const 1984)
     )
     (drop
      (call $memcpy
@@ -16740,7 +16775,7 @@
      )
      (i32.const 0)
     )
-    (i32.const 1920)
+    (i32.const 1984)
    )
    (drop
     (call $memcpy
@@ -16789,7 +16824,7 @@
      )
      (i32.const 0)
     )
-    (i32.const 1920)
+    (i32.const 1984)
    )
    (drop
     (call $memcpy
@@ -17344,7 +17379,7 @@
       (get_local $2)
      )
     )
-    (i32.const 1936)
+    (i32.const 2000)
    )
    (set_local $4
     (i32.load8_u
@@ -17517,7 +17552,7 @@
  )
  (func $malloc (param $0 i32) (result i32)
   (call $_ZN7enumivo14memory_manager6mallocEm
-   (i32.const 1940)
+   (i32.const 2004)
    (get_local $0)
   )
  )
@@ -17762,7 +17797,7 @@
          )
         )
        )
-       (i32.const 10336)
+       (i32.const 10400)
       )
       (set_local $13
        (i32.add
@@ -17986,13 +18021,13 @@
    (block $label$1
     (br_if $label$1
      (i32.eqz
-      (i32.load8_u offset=10422
+      (i32.load8_u offset=10486
        (i32.const 0)
       )
      )
     )
     (set_local $7
-     (i32.load offset=10424
+     (i32.load offset=10488
       (i32.const 0)
      )
     )
@@ -18001,11 +18036,11 @@
    (set_local $7
     (current_memory)
    )
-   (i32.store8 offset=10422
+   (i32.store8 offset=10486
     (i32.const 0)
     (i32.const 1)
    )
-   (i32.store offset=10424
+   (i32.store offset=10488
     (i32.const 0)
     (tee_local $7
      (i32.shl
@@ -18056,7 +18091,7 @@
        )
       )
       (set_local $3
-       (i32.load offset=10424
+       (i32.load offset=10488
         (i32.const 0)
        )
       )
@@ -18064,7 +18099,7 @@
      (set_local $8
       (i32.const 0)
      )
-     (i32.store offset=10424
+     (i32.store offset=10488
       (i32.const 0)
       (get_local $3)
      )
@@ -18118,18 +18153,18 @@
      )
      (block $label$6
       (br_if $label$6
-       (i32.load8_u offset=10422
+       (i32.load8_u offset=10486
         (i32.const 0)
        )
       )
       (set_local $3
        (current_memory)
       )
-      (i32.store8 offset=10422
+      (i32.store8 offset=10486
        (i32.const 0)
        (i32.const 1)
       )
-      (i32.store offset=10424
+      (i32.store offset=10488
        (i32.const 0)
        (tee_local $3
         (i32.shl
@@ -18197,12 +18232,12 @@
        )
       )
       (set_local $6
-       (i32.load offset=10424
+       (i32.load offset=10488
         (i32.const 0)
        )
       )
      )
-     (i32.store offset=10424
+     (i32.store offset=10488
       (i32.const 0)
       (i32.add
        (get_local $6)
@@ -18462,7 +18497,7 @@
     (br_if $label$1
      (i32.lt_s
       (tee_local $2
-       (i32.load offset=10324
+       (i32.load offset=10388
         (i32.const 0)
        )
       )
@@ -18470,7 +18505,7 @@
      )
     )
     (set_local $3
-     (i32.const 10132)
+     (i32.const 10196)
     )
     (set_local $1
      (i32.add
@@ -18478,7 +18513,7 @@
        (get_local $2)
        (i32.const 12)
       )
-      (i32.const 10132)
+      (i32.const 10196)
      )
     )
     (loop $label$2
@@ -18570,7 +18605,7 @@
     (br_if $label$0
      (i32.eqz
       (tee_local $2
-       (i32.load offset=10428
+       (i32.load offset=10492
         (i32.const 0)
        )
       )
@@ -20471,7 +20506,7 @@
                     (i32.const 3)
                    )
                   )
-                  (i32.const 10464)
+                  (i32.const 10528)
                  )
                 )
                )
@@ -20515,7 +20550,7 @@
                                   (f64.load
                                    (i32.add
                                     (get_local $6)
-                                    (i32.const 10432)
+                                    (i32.const 10496)
                                    )
                                   )
                                  )
@@ -20694,7 +20729,7 @@
                   (f64.load
                    (i32.add
                     (get_local $6)
-                    (i32.const 10448)
+                    (i32.const 10512)
                    )
                   )
                   (f64.add
